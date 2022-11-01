@@ -1,0 +1,77 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Car {
+  id: Int!
+  brand: String!
+  model: String!
+  year: Float!
+  category: Category!
+  pricePerDay: Float!
+  status: STATUS!
+}
+
+enum Category {
+  SEDAN
+  COUPE
+  SUV
+}
+
+enum STATUS {
+  AVAILABLE
+  UNAVAILABLE
+}
+
+type Order {
+  id: Int!
+  createdDate: DateTime!
+  endDate: DateTime
+  days: Int!
+  price: Float!
+  status: ORDER_STATUS!
+  car: Car!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+enum ORDER_STATUS {
+  ACTIVE
+  DEACTIVE
+}
+
+type Query {
+  getAllCars: [Car!]!
+  carAvailable: [Car!]!
+  getCar(id: Int!): Car!
+  getAllOrders: [Order!]!
+  getOrder(id: Int!): Order!
+}
+
+type Mutation {
+  createCar(createCarInput: CreateCarInput!): Car!
+  updateCar(id: Int!, updateCarInput: UpdateCarInput!): Car!
+  deleteCar(id: Int!): String!
+  bookCar(carId: Int!, day: Int!): Order!
+}
+
+input CreateCarInput {
+  brand: String!
+  model: String!
+  year: Float!
+  category: Category!
+  pricePerDay: Float!
+  status: STATUS = AVAILABLE
+}
+
+input UpdateCarInput {
+  brand: String
+  model: String
+  year: Float
+  category: Category
+  pricePerDay: Float
+  status: STATUS
+}
