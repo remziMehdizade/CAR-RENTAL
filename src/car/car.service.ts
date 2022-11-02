@@ -34,7 +34,7 @@ export class CarService {
       .where('car.id NOT IN (' + order.getQuery() + ')')
       .setParameter('registered', true)
       .getMany();
-    console.log(order.getQuery());
+
     return car;
   }
 
