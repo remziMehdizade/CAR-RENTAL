@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Order } from 'src/order/entities/order.entity';
-import { QueryBuilder, Repository } from 'typeorm';
+import {  Repository } from 'typeorm';
 import { CreateCarInput } from './dto/create-car.input';
 import { UpdateCarInput } from './dto/update-car.input';
 import { Car } from './entities/car.entity';
@@ -10,7 +10,6 @@ import { Car } from './entities/car.entity';
 export class CarService {
   constructor(
     @InjectRepository(Car) private carRepository: Repository<Car>,
-    @InjectRepository(Order) private orderRepository: Repository<Order>,
   ) {}
   async create(createCarInput: CreateCarInput) {
     const car = await this.carRepository.create(createCarInput);
