@@ -1,6 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { STATUS } from 'src/car/dto/create-car.input';
 import { Car } from 'src/car/entities/car.entity';
 import { Repository } from 'typeorm';
 import { ORDER_STATUS } from './dto/create-order.input';
@@ -17,7 +16,7 @@ export class OrderService {
     const order = new Order();
 
     const car = await this.carRepository.findOne({
-      where: { id, status: STATUS.AVAILABLE },
+      where: { id },
     });
     if (!car) {
       throw new NotFoundException(' Car Not Found');
@@ -31,13 +30,21 @@ export class OrderService {
       order.price = car.pricePerDay * day;
     }
 
-    const saveOrder = await this.orderRepository.create(order);
+    const saveOrder = this.orderRepository.create(order);
 
     return await this.orderRepository.save(saveOrder);
   }
 
   async findAll() {
-    return await this.orderRepository.find({ relations: ['car'] });
+    // return await this.orderRepository.find({ relations: ['car'] });
+
+    const order = await this.orderRepository
+      .createQueryBuilder('order')
+      .leftJoinAndSelect('order.car', 'car')
+      .where('order.endDate >:date', { date: new Date() })
+      .getMany();
+
+    return order;
   }
 
   async findOne(id: number) {

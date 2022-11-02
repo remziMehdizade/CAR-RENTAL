@@ -1,7 +1,6 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
-import { Order } from 'src/order/entities/order.entity';
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { Category, STATUS } from '../dto/create-car.input';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Category } from '../dto/create-car.input';
 
 @ObjectType()
 @Entity({ name: 'car' })
@@ -32,10 +31,6 @@ export class Car {
   })
   @Field({ nullable: false })
   pricePerDay: number;
-
-  @Column()
-  @Field(() => STATUS)
-  status: STATUS;
 
   // @OneToMany(() => Order, (order) => order.car, {
   //   nullable: true,

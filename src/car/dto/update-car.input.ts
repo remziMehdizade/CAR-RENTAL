@@ -1,4 +1,4 @@
-import { Category, CreateCarInput, STATUS } from './create-car.input';
+import { Category, CreateCarInput } from './create-car.input';
 import { InputType, Field, PartialType } from '@nestjs/graphql';
 
 @InputType()
@@ -17,7 +17,4 @@ export class UpdateCarInput extends PartialType(CreateCarInput) {
 
   @Field({ nullable: true })
   pricePerDay?: number;
-
-  @Field(() => STATUS, { nullable: true })
-  status?: STATUS;
 }

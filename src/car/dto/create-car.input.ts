@@ -8,13 +8,6 @@ export enum Category {
 registerEnumType(Category, {
   name: 'Category',
 });
-export enum STATUS {
-  AVAILABLE = 'available ',
-  UNAVAILABLE = 'unavailable',
-}
-registerEnumType(STATUS, {
-  name: 'STATUS',
-});
 @InputType()
 export class CreateCarInput {
   @Field()
@@ -31,7 +24,4 @@ export class CreateCarInput {
 
   @Field()
   pricePerDay: number;
-
-  @Field(() => STATUS, { defaultValue: STATUS.AVAILABLE })
-  status: STATUS;
 }

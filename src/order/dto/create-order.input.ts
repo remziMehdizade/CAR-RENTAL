@@ -1,6 +1,6 @@
 import { InputType, Field, registerEnumType, Int } from '@nestjs/graphql';
 export enum ORDER_STATUS {
-  ACTIVE = 'active ',
+  ACTIVE = 'active',
   DEACTIVE = 'deactive',
 }
 registerEnumType(ORDER_STATUS, {

@@ -18,7 +18,7 @@ export class CarResolver {
     return this.carService.findAll();
   }
 
-  @Query(() => [Car], { name: 'carAvailable' })
+  @Query(() => [Car], { name: 'getAllAvailableCars' })
   getAllAvailableCars() {
     return this.carService.getAllAvailableCars();
   }

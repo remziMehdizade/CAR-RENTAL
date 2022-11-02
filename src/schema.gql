@@ -9,18 +9,12 @@ type Car {
   year: Float!
   category: Category!
   pricePerDay: Float!
-  status: STATUS!
 }
 
 enum Category {
   SEDAN
   COUPE
   SUV
-}
-
-enum STATUS {
-  AVAILABLE
-  UNAVAILABLE
 }
 
 type Order {
@@ -45,7 +39,7 @@ enum ORDER_STATUS {
 
 type Query {
   getAllCars: [Car!]!
-  carAvailable: [Car!]!
+  getAllAvailableCars: [Car!]!
   getCar(id: Int!): Car!
   getAllOrders: [Order!]!
   getOrder(id: Int!): Order!
@@ -64,7 +58,6 @@ input CreateCarInput {
   year: Float!
   category: Category!
   pricePerDay: Float!
-  status: STATUS = AVAILABLE
 }
 
 input UpdateCarInput {
@@ -73,5 +66,4 @@ input UpdateCarInput {
   year: Float
   category: Category
   pricePerDay: Float
-  status: STATUS
 }
