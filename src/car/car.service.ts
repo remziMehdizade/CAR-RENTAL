@@ -23,7 +23,7 @@ export class CarService {
 
   async getAllAvailableCars() {
     //return await this.carRepository.find();
-    const order = await this.carRepository
+    const order =  this.carRepository
       .createQueryBuilder('car')
       .leftJoinAndSelect(Order, 'order', 'order.carId=car.id')
       .select(['car.id'])
