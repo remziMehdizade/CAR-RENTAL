@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Order } from 'src/order/entities/order.entity';
-import {  Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { CreateCarInput } from './dto/create-car.input';
 import { UpdateCarInput } from './dto/update-car.input';
 import { Car } from './entities/car.entity';
@@ -10,6 +10,7 @@ import { Car } from './entities/car.entity';
 export class CarService {
   constructor(
     @InjectRepository(Car) private carRepository: Repository<Car>,
+    @InjectRepository(Order) private orderRepository: Repository<Order>,
   ) {}
   async create(createCarInput: CreateCarInput) {
     const car = await this.carRepository.create(createCarInput);
@@ -22,13 +23,14 @@ export class CarService {
 
   async getAllAvailableCars() {
     //return await this.carRepository.find();
-    const order =  this.carRepository
-      .createQueryBuilder('car')
-      .leftJoinAndSelect(Order, 'order', 'order.carId=car.id')
-      .select(['car.id'])
+
+    const order =  this.orderRepository
+      .createQueryBuilder('order')
+      .distinctOn(['order.carId'])
+      .select(['order.carId'])
       .where('order.endDate >now()');
 
-    const car = this.carRepository
+    const car = await this.carRepository
       .createQueryBuilder('car')
       .where('car.id NOT IN (' + order.getQuery() + ')')
       .setParameter('registered', true)
